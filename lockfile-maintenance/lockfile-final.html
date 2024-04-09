@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Dependency bump a day keeps the code crashes away&colon; the importance of updating a lockfile</title>
+        <style>
+/* From extension vscode.markdown-math */
+@font-face{font-family:KaTeX_AMS;src:url(fonts/KaTeX_AMS-Regular.woff2) format("woff2"),url(fonts/KaTeX_AMS-Regular.woff) format("woff"),url(fonts/KaTeX_AMS-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Caligraphic;src:url(fonts/KaTeX_Caligraphic-Bold.woff2) format("woff2"),url(fonts/KaTeX_Caligraphic-Bold.woff) format("woff"),url(fonts/KaTeX_Caligraphic-Bold.ttf) format("truetype");font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Caligraphic;src:url(fonts/KaTeX_Caligraphic-Regular.woff2) format("woff2"),url(fonts/KaTeX_Caligraphic-Regular.woff) format("woff"),url(fonts/KaTeX_Caligraphic-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Fraktur;src:url(fonts/KaTeX_Fraktur-Bold.woff2) format("woff2"),url(fonts/KaTeX_Fraktur-Bold.woff) format("woff"),url(fonts/KaTeX_Fraktur-Bold.ttf) format("truetype");font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Fraktur;src:url(fonts/KaTeX_Fraktur-Regular.woff2) format("woff2"),url(fonts/KaTeX_Fraktur-Regular.woff) format("woff"),url(fonts/KaTeX_Fraktur-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Bold.woff2) format("woff2"),url(fonts/KaTeX_Main-Bold.woff) format("woff"),url(fonts/KaTeX_Main-Bold.ttf) format("truetype");font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-BoldItalic.woff2) format("woff2"),url(fonts/KaTeX_Main-BoldItalic.woff) format("woff"),url(fonts/KaTeX_Main-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Italic.woff2) format("woff2"),url(fonts/KaTeX_Main-Italic.woff) format("woff"),url(fonts/KaTeX_Main-Italic.ttf) format("truetype");font-weight:400;font-style:italic}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Regular.woff2) format("woff2"),url(fonts/KaTeX_Main-Regular.woff) format("woff"),url(fonts/KaTeX_Main-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Math;src:url(fonts/KaTeX_Math-BoldItalic.woff2) format("woff2"),url(fonts/KaTeX_Math-BoldItalic.woff) format("woff"),url(fonts/KaTeX_Math-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}@font-face{font-family:KaTeX_Math;src:url(fonts/KaTeX_Math-Italic.woff2) format("woff2"),url(fonts/KaTeX_Math-Italic.woff) format("woff"),url(fonts/KaTeX_Math-Italic.ttf) format("truetype");font-weight:400;font-style:italic}@font-face{font-family:"KaTeX_SansSerif";src:url(fonts/KaTeX_SansSerif-Bold.woff2) format("woff2"),url(fonts/KaTeX_SansSerif-Bold.woff) format("woff"),url(fonts/KaTeX_SansSerif-Bold.ttf) format("truetype");font-weight:700;font-style:normal}@font-face{font-family:"KaTeX_SansSerif";src:url(fonts/KaTeX_SansSerif-Italic.woff2) format("woff2"),url(fonts/KaTeX_SansSerif-Italic.woff) format("woff"),url(fonts/KaTeX_SansSerif-Italic.ttf) format("truetype");font-weight:400;font-style:italic}@font-face{font-family:"KaTeX_SansSerif";src:url(fonts/KaTeX_SansSerif-Regular.woff2) format("woff2"),url(fonts/KaTeX_SansSerif-Regular.woff) format("woff"),url(fonts/KaTeX_SansSerif-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Script;src:url(fonts/KaTeX_Script-Regular.woff2) format("woff2"),url(fonts/KaTeX_Script-Regular.woff) format("woff"),url(fonts/KaTeX_Script-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size1;src:url(fonts/KaTeX_Size1-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size1-Regular.woff) format("woff"),url(fonts/KaTeX_Size1-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size2;src:url(fonts/KaTeX_Size2-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size2-Regular.woff) format("woff"),url(fonts/KaTeX_Size2-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size3;src:url(fonts/KaTeX_Size3-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size3-Regular.woff) format("woff"),url(fonts/KaTeX_Size3-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size4;src:url(fonts/KaTeX_Size4-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size4-Regular.woff) format("woff"),url(fonts/KaTeX_Size4-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Typewriter;src:url(fonts/KaTeX_Typewriter-Regular.woff2) format("woff2"),url(fonts/KaTeX_Typewriter-Regular.woff) format("woff"),url(fonts/KaTeX_Typewriter-Regular.ttf) format("truetype");font-weight:400;font-style:normal}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;text-indent:0;text-rendering:auto;border-color:currentColor}.katex *{-ms-high-contrast-adjust:none!important}.katex .katex-version:after{content:"0.13.0"}.katex .katex-mathml{position:absolute;clip:rect(1px,1px,1px,1px);padding:0;border:0;height:1px;width:1px;overflow:hidden}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-weight:700;font-style:italic}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{display:inline-table;table-layout:fixed;border-collapse:collapse}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;vertical-align:bottom;position:relative}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;vertical-align:bottom;font-size:1px;width:2px;min-width:2px}.katex .vbox{display:inline-flex;flex-direction:column;align-items:baseline}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{width:0;max-width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{display:inline-block;width:100%;border-bottom-style:solid}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .clap,.katex .llap,.katex .rlap{width:0;position:relative}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{display:inline-block;border:0 solid;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{display:inline-block;width:100%;border-bottom-style:solid}.katex .hdashline{display:inline-block;width:100%;border-bottom-style:dashed}.katex .sqrt>.root{margin-left:.27777778em;margin-right:-.55555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.83333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.16666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.33333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.66666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.45666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.14666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.71428571em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.85714286em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.14285714em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.28571429em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.42857143em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.71428571em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.05714286em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.46857143em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.96285714em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.55428571em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.55555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.66666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.77777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.88888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.11111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.33333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.30444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.76444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.41666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.58333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.66666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.83333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.72833333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.07333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.34722222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.41666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.48611111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.55555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.69444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.83333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.44027778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.72777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.28935185em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.34722222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.40509259em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.46296296em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.52083333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.69444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.83333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.20023148em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.43981481em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.24108004em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.28929605em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.33751205em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.38572806em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.43394407em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.48216008em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.57859209em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.69431051em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.83317261em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.19961427em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.20096463em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.24115756em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.28135048em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.32154341em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.36173633em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.40192926em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.48231511em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.57877814em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.69453376em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.83360129em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{display:block;position:absolute;width:100%;height:inherit;fill:currentColor;stroke:currentColor;fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex svg path{stroke:none}.katex img{border-style:none;min-width:0;min-height:0;max-width:none;max-height:none}.katex .stretchy{width:100%;display:block;position:relative;overflow:hidden}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{width:100%;position:relative;overflow:hidden}.katex .halfarrow-left{position:absolute;left:0;width:50.2%;overflow:hidden}.katex .halfarrow-right{position:absolute;right:0;width:50.2%;overflow:hidden}.katex .brace-left{position:absolute;left:0;width:25.1%;overflow:hidden}.katex .brace-center{position:absolute;left:25%;width:50%;overflow:hidden}.katex .brace-right{position:absolute;right:0;width:25.1%;overflow:hidden}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{box-sizing:border-box;border:.04em solid}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{box-sizing:border-content;border-top:.049em solid;border-right:.049em solid;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{counter-increment:katexEqnNo;content:"(" counter(katexEqnNo) ")"}.katex .mml-eqn-num:before{counter-increment:mmlEqnNo;content:"(" counter(mmlEqnNo) ")"}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;position:absolute;left:calc(50% + .3em);text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{text-align:left;padding-left:2em}body{counter-reset:katexEqnNo mmlEqnNo}
+
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.katex-error {
+	color: var(--vscode-editorError-foreground);
+}
+
+</style>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+  </style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                max-width: 700px;
+                margin: 0 auto;
+                font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 16px;
+                line-height: 2;
+                letter-spacing: 0.8px;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <p>Author: Mike
+Reviewer: Chris M</p>
+<h1 id="dependency-bump-a-day-keeps-the-code-crashes-away-the-importance-of-updating-a-lockfile">Dependency bump a day keeps the code crashes away: the importance of updating a lockfile</h1>
+<p>Coding is fun, there's no doubt about it.</p>
+<p>But do you know what else is? Testing! Code maintenance! Keeping dependencies in sync!</p>
+<p>No? Only for me? Well, it might not be fun for many of you, but to keep your library/app working properly you'll need to adapt and at least try some of it.</p>
+<p>If you ever wrote a JavaScript library and published it on NPM (Node Package Manager), at some point of its development you might have experienced that it exhibited an inconsistent behaviour and you didn’t know the root cause of it. It was working fine for you and some of your coworkers/contributors, but crashing for everybody else. Do you want to know why?</p>
+<p>There is a high chance it was caused by unhandled dependencies in your project. This article addresses that problem and focuses on a very specific task: lockfile maintenance. I'll show you:</p>
+<ul>
+<li>what <code>yarn.lock</code> (lockfile) is</li>
+<li>why you need to do lockfile maintenance</li>
+<li>what is the possible solution</li>
+<li>what mistakes we've done so you can avoid doing them</li>
+</ul>
+<blockquote>
+<p><strong>Disclaimer</strong>: all of the mentioned below is based on true events. No developers were harmed during implementation and/or for the purposes of this article</p>
+</blockquote>
+<h2 id="problem">Problem</h2>
+<p>For the last few months, I've been working at <strong>Stoplight</strong> as a part of <strong>11Sigma</strong> crew on an open-source library called <a href="https://stoplight.io/open-source/elements/">Elements</a>.</p>
+<p>An <a href="https://github.com/stoplightio/elements/issues/989">issue</a> emerged in our library integration that made us <a href="https://github.com/stoplightio/json-schema-viewer/pull/121">challenge our belief</a> that our dependencies are under control. In short, our app crashed because of a bug in a dependency’s dependency. Despite fixing the nested dependency, the issue remained to be unsolved.</p>
+<p>Fortunately, it turned out to be a non-issue on a fresh install of <code>Elements</code>.</p>
+<p>Unfortunately, that meant that we weren't testing what users were using at a given moment.</p>
+<p>In order to understand this issue fully though, we first need to learn about the lockfile itself and how dependencies are installed in a project.</p>
+<h2 id="what-is-a-lockfile">What is a lockfile?</h2>
+<p><em>If you are familiar with how a lockfile works , feel free to skip to “Problem - second look”</em></p>
+<p>To understand why the topic of this article is important to you, it is necessary to know what a lockfile is and how it works. Although it can have different names depending on whether you use <code>npm</code> or <code>yarn</code>, the premise is pretty much the same. Because I'm using <code>yarn</code> though, I'll use <code>yarn.lock</code> as an example in this article.</p>
+<p>When you run <code>yarn</code> in your project, two things can happen:</p>
+<ol>
+<li>A lockfile (<code>yarn.lock</code>) is generated (if there isn't any) according to the contents of <code>package.json</code></li>
+<li>Packages are installed according to contents of an existing <code>yarn.lock</code></li>
+</ol>
+<blockquote>
+<p><strong>Important:</strong> When you install dependencies in your application or library, only the top-level <code>yarn.lock</code> file is respected. Lockfiles within your dependencies will be ignored.</p>
+</blockquote>
+<p>In short:</p>
+<blockquote>
+<p>When present in the project, <code>yarn.lock</code> is the main source of information about the current versions of dependencies in a project. <code>Yarn</code> uses that information to check if it needs to update anything - it compares dependency versions currently installed in a project (listed in <code>yarn.lock</code>) to version restrictions in <code>package.json</code> and updates packages if needed. Information from the lockfile can be further used by other users to create a repeatable environment elsewhere.</p>
+</blockquote>
+<h3 id="generating-yarnlock">Generating <code>yarn.lock</code></h3>
+<p>Whenever you run <code>yarn</code> (which is an equivalent of running <code>yarn install</code>) upon a fresh install, a <code>yarn.lock</code> file is generated. It lists the versions of dependencies that are used at the time of the installation process. That means it looks into your <code>package.json</code> and depending on the versioning syntax, it will install your project dependencies, then their dependencies, then their dependencies, and so on...</p>
+<blockquote>
+<p>For more info about dependency versioning check <a href="https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies">this link</a></p>
+</blockquote>
+<p>Let's say your project uses two dependencies: <code>chicken</code> and <code>farm</code>. Both of these are external packages, over which we don't have any control</p>
+<pre><code class="language-json"><div><span class="hljs-comment">// package.json (your project)</span>
+ 
+ dependencies: {
+   <span class="hljs-attr">&quot;chicken&quot;</span>: <span class="hljs-string">&quot;^1.2.0&quot;</span>,
+   <span class="hljs-attr">&quot;farm&quot;</span>: <span class="hljs-string">&quot;2.3.0&quot;</span>
+ }
+</div></code></pre>
+<p>and <code>farm</code> package uses pinned (specific) version of <code>chicken</code>:</p>
+<pre><code class="language-json"><div><span class="hljs-comment">// package.json (`farm` package)</span>
+ 
+ dependencies: {
+   <span class="hljs-attr">&quot;chicken&quot;</span>: <span class="hljs-string">&quot;1.0.0&quot;</span>,
+   (...) 
+ }
+</div></code></pre>
+<p>This will result in your project requiring two versions of <code>chicken</code>:</p>
+<ul>
+<li>1.0.0 for <code>farm</code> dependency</li>
+<li>^1.2.0 as defined in your project's <code>package.json</code>. This will vary upon a fresh install depending on what's the latest version after <code>1.2.0</code> - the <code>^</code> symbol allows changes that do not modify the left-most non-zero element in the version number. For this particular version range it means 1.2.0 &lt;= installed version &lt; 2.0.0. To give an example - if <code>v1.2.4</code> is available at the moment of (fresh) installation of your project, it will be installed. Same for <code>v1.5.8</code>, <code>v1.7.2</code>, <code>v1.9.9</code>, but not for <code>v2.0.0</code></li>
+</ul>
+<p>Both of these versions will be present in the <code>yarn.lock</code></p>
+<p>The folder structure will look like this:</p>
+<p><img src="folder-strucure.png" alt=""></p>
+<p>At this point you might’ve noticed that this isn’t a perfect situation - first of all, if a sub-dependency (<code>chicken</code>) has a bug introduced in one of its versions, and dependency that uses it (‘farm’) doesn’t pin the version - it could introduce a bug to your project.</p>
+<p>It has a bright side to it though - if your project would require <code>chicken</code> and use that same/matching version range, e.g.</p>
+<pre><code class="language-json"><div> dependencies: {
+   <span class="hljs-attr">&quot;chicken&quot;</span>: <span class="hljs-string">&quot;^1.2.0&quot;</span>,
+   (...) 
+ }
+</div></code></pre>
+<p>you won’t install two versions of the <code>chicken</code> package, decreasing the size of your project and preventing potential conflicts between different versions of the same package.</p>
+<h3 id="updating-the-lockfile">Updating the lockfile</h3>
+<p>Things are a bit easier to explain when it comes to updating the lockfile. It can happen in 3 situations - when the dependency:</p>
+<ul>
+<li>is added,</li>
+<li>removed,</li>
+<li>modified</li>
+</ul>
+<p>This can happen in two ways - via <code>yarn</code> CLI (which updates both <code>package.json</code> and <code>yarn.lock</code>):</p>
+<pre><code class="language-zsh"><div><span class="hljs-comment"># adding dependencies</span>
+ 
+&gt; yarn add PACKAGE-NAME
+ 
+<span class="hljs-comment"># removing dependencies</span>
+ 
+&gt; yarn remove PACKAGE-NAME
+ 
+<span class="hljs-comment"># upgrading all dependencies</span>
+ 
+&gt; yarn upgrade
+ 
+<span class="hljs-comment"># upgrading specific package</span>
+ 
+&gt; yarn upgrade PACKAGE-NAME
+ 
+<span class="hljs-comment"># Adding the `--latest` flag at the end of ‘upgrade’ commands makes yarn ignore the specified version range and install the latest version(s).</span>
+</div></code></pre>
+<p>You can also manually modify the contents of <code>package.json</code> and then run <code>yarn install</code>. If <code>yarn</code> doesn't detect any differences between versions in <code>package.json</code> and <code>yarn.lock</code>, it won't install anything new and/or update <code>yarn.lock</code></p>
+<p>Question: you installed project dependencies at some point. Time has passed, maybe a few of your project dependencies released a new version, you also decided to add a few other dependencies in the meantime. What will happen if you run <code>yarn</code>?</p>
+<p>Answer: Well, <code>yarn</code> will of course install dependencies freshly added to <code>package.json</code>, that are not yet installed and/or not present in <code>yarn.lock</code>. But if you have <code>”dependecy_A”:“v1.3.5”</code> already in your <code>yarn.lock</code>, latest version available on NPM is <code>”dependency_A”:“v.1.4.0”</code> and version range in <code>package.json</code> is <code>^1.2.0</code> - will <code>yarn</code> upgrade to the latest version? No, it won’t. <code>v1.3.5</code> falls into the requirement of being <code>^1.2.0</code>, so <code>yarn</code> doesn’t see the need of upgrading the package.</p>
+<h2 id="problem---second-look">Problem - second look</h2>
+<p>Let’s come back to the original issue for a moment:</p>
+<blockquote>
+<ul>
+<li>An integration of <code>Elements</code> in <a href="https://storybook.js.org/">Storybook</a> (a tool for building an testing UI components) was broken because of a bug present in <code>Elements</code> dependency, <code>JSV</code> (<a href="https://github.com/stoplightio/json-schema-viewer">JSON Schema Viewer</a>)</li>
+<li><code>JSV</code> was using a dependency called <code>JST</code> (<a href="https://github.com/stoplightio/json-schema-tree">JSON Schema Tree</a>) (which is effectively a sub-dependency of <code>Elements</code>) with a non-pinned (non-specified) version (<code>^1.1.0</code>) listed in its package.json.</li>
+<li>New version of JST (<code>1.1.2</code>) which falls into the requirement of being <code>^1.1.0</code> included the fix that would solve our problem</li>
+<li>Even though the <code>JST</code> version could be <code>1.1.0</code> <strong>or above</strong>, <code>Elements</code> itself would still hang for us. Installing dependencies (by running <code>yarn</code> within the <code>Elements</code> directory) didn’t help either. Why?</li>
+</ul>
+</blockquote>
+<p>The answer at this point is actually pretty simple - even though both of the <code>JSV</code> and <code>JST</code> versions are not pinned and should update upon a fresh install, our local <code>yarn.lock</code> file was blocking these updates, having <code>v1.1.0</code> of <code>JST</code> in itself.</p>
+<h2 id="maybe-we-should-just-deploy-the-lockfile-alongside-other-files">Maybe we should just deploy the lockfile alongside other files?</h2>
+<p>As explained in paragraphs above - when present, <code>yarn.lock</code> serves as a main source of information about which versions of packages should be installed. If that’s the case, can we just deploy it with the rest of the package when releasing a new version?</p>
+<h3 id="tldrtoo-long-didnt-read---no-you-dont-sometimes">tl;dr(too long, didn’t read) - no you don't (sometimes)</h3>
+<p>That depends on what your project is:</p>
+<ul>
+<li>Is your project an application? <strong>Then: Yes</strong></li>
+<li>Is your project a library? <strong>If so: No</strong></li>
+</ul>
+<h3 id="why-should-you-care-about-lockfile-maintenance-for-libraries">Why should you care about lockfile maintenance for libraries?</h3>
+<p>There seems to be an agreement as to whether the lockfile should be committed. There's an <a href="https://classic.yarnpkg.com/blog/2016/11/24/lockfiles-for-all/">excellent post on yarnpkg</a> covering this topic (both for applications and libraries) if you want to understand the reasoning behind it.</p>
+<p>We'll focus on libraries, such as <code>Elements</code>. Plus, committing the lockfile alongside the application pretty much solves the issue of unwanted updates.</p>
+<h3 id="handling-lockfile-in-libraries">Handling lockfile in libraries</h3>
+<p>Because only the top-level lockfile is respected (the one form users project root directory), <code>yarn</code> will look into the used library's <code>package.json</code> and install the packages with versions described there. Unless you pin each dependency in your library to an exact version, users' projects might end up having different sub-dependencies depending on the time of installation.</p>
+<p>So are we doomed? Kind of. Users will always be the first people to discover a breaking change in a dependency (and hopefully file a bug report). To give you some perspective:</p>
+<p>let’s assume you library have 20 external, sub-dependencies
+each of this sub-dependency can get a new release anytime
+thousands (potentially) of users install your library each day
+each such installation will fetch the latest sub-dependencies
+if any of those sub-dependencies introduce a bug, your users might be affected
+the above will happen, unless your development team has a way to regularly test that sub-dependency upgrades don’t break your library</p>
+<h2 id="how-to-keep-dependencies-up-to-date">How to keep dependencies up to date?</h2>
+<p>By now, we’ve established that <code>yarn.lock</code> left alone without any maintenance can introduce confusion about the current state of the project/library, as developers might end up having different versions of dependencies installed locally on their machines.</p>
+<p>Let’s take a look at possible solutions for keeping the lockfile up to date.</p>
+<h3 id="dependabot">Dependabot</h3>
+<p>The first approach we looked at was <a href="https://dependabot.com">Dependabot</a> - a well-known tool for bumping dependencies. It checks for possible updates, opens Pull Requests with them, and allow users to review and merge (if you're confident enough with your test suite you can even set auto-merge)</p>
+<p>We'd been already using Dependabot for security updates and it served the purpose really well!</p>
+<p>Why did we decide not to go with it?</p>
+<p>Unfortunately, it <a href="https://github.com/dependabot/dependabot-core/issues/2390">misses</a> (at least at the time of writing this article) the ability to have duplicate updates for different <code>allow</code> types. That means you can't have e.g. daily updates for <code>dependencies</code> and weekly updates for <code>devDependencies</code> in the same project. In our case it was about not being able to daily update to versions that include security-related changes and all of the other changes (features, fixes, major updates) on a weekly basis using the same tool.</p>
+<p>Also, as it turned out, later on, having new PR for each dependency update is a bit of pain.</p>
+<h3 id="renovate">Renovate</h3>
+<p>After figuring out that <code>Dependabot</code> does not allow us to do the above, we've decided to look for alternatives. One of the most promising ones (and open-source!) was <a href="https://github.com/renovatebot/renovate">Renovate</a>.</p>
+<p>Even though the basic principle of bumping dependencies is the same, the tool itself seems very powerful and customizable. It has 3 applications (Github, Gitlab, and self-hosted), highly granular settings (you can even set custom rules for auto-merging of PR), and allows opening a PR for a batch of dependencies, instead of for each one.</p>
+<p>As we are using GitHub for version control, the supported application for it was an obvious choice. Because our usage was a bit unorthodox - updating only <code>yarn.lock</code> and not <code>package.json</code> in order to have a representation of current users environments and at the same controlling the version ranges - we wanted to test it on the self-hosted version first, to avoid unnecessary PRs created by Renovate, or even worse - unwanted merges.</p>
+<p>This is where we hit a wall with Renovate - even though it has a great range of options, we didn't manage to configure it the way we wanted - update <strong>ONLY</strong> <code>yarn.lock</code> once a week and create a single PR.</p>
+<p>Because of that, we decided to not spend more time on publicly available solutions, and handle the lockfile maintenance ourselves.</p>
+<h3 id="your-own-ci-job">Your own CI job</h3>
+<p>You may ask: <em>&quot;Why did you even bother with setting those dependency management systems? Isn't it easier to just run <code>yarn upgrade</code> on everything and call it a day?&quot;</em></p>
+<p>And you would be partially right. The thing is that these systems probably do the exact same thing under the hood but put more attention to the possible failures and corner cases. And just because they are already battle-tested, we decided to check them first. Custom solutions built from scratch, in general, tend to be more fragile than the commercially available ones.</p>
+<p>Since neither Dependabot nor Renovate met our needs at a time though, our way out was writing a custom CI job that:</p>
+<ol>
+<li>Would bump dependencies for us</li>
+<li>Run some basic tests against those changes</li>
+<li>Create a PR</li>
+</ol>
+<p>Our toolchain was:</p>
+<ul>
+<li><code>CircleCI</code> for CI/CD</li>
+<li><code>git</code> and <code>GitHub</code> for VCS</li>
+<li><code>Yarn</code> as a package manager</li>
+<li><code>Jest</code> for testing</li>
+<li><code>Coffee®</code> for energy</li>
+</ul>
+<h4 id="custom-command"><strong>Custom command</strong></h4>
+<pre><code class="language-bash"><div><span class="hljs-comment">### bash</span>
+ 
+ $ git checkout main
+ $ <span class="hljs-built_in">export</span> BRANCH_NAME=feat/lockfile-maintenance-ci-job-$(date +<span class="hljs-string">&quot;%m-%d-%Y&quot;</span>) &amp;&amp; git checkout -b <span class="hljs-variable">$BRANCH_NAME</span>
+ $ yarn upgrade
+ $ git add yarn.lock
+ $ git commit -m <span class="hljs-string">&quot;chore: weekly lockfile maintenance&quot;</span>
+ $ git push --set-upstream origin <span class="hljs-variable">$BRANCH_NAME</span>
+ $ BODY=<span class="hljs-string">&#x27;{&quot;head&quot;:&#x27;</span><span class="hljs-string">&#x27;&quot;&#x27;</span><span class="hljs-variable">${BRANCH_NAME}</span><span class="hljs-string">&#x27;&quot;&#x27;</span><span class="hljs-string">&#x27;,&quot;base&quot;:&quot;main&quot;,&quot;title&quot;:&quot;Weekly lockfile maintenance&quot;}&#x27;</span>
+     &amp;&amp; curl -X POST
+     -H <span class="hljs-string">&quot;Accept:application/vnd.github.v3+json&quot;</span>
+     -u <span class="hljs-variable">$GIT_AUTHOR_NAME</span>:<span class="hljs-variable">$GH_TOKEN</span> https://api.github.com/repos/stoplightio/elements/pulls
+     -d <span class="hljs-string">&quot;<span class="hljs-variable">$BODY</span>&quot;</span>
+</div></code></pre>
+<p>The premise of this is:</p>
+<ol>
+<li>Get the latest changes from main (no need to <code>git fetch</code> as this is being run in a fresh CI job each time) and create a feature branch with a name corresponding to the lockfile maintenance</li>
+</ol>
+<pre><code class="language-bash"><div> $ git checkout main
+ 
+ $ <span class="hljs-built_in">export</span> BRANCH_NAME=feat/lockfile-maintenance-ci-job-$(date +<span class="hljs-string">&quot;%m-%d-%Y&quot;</span>) &amp;&amp; git checkout -b <span class="hljs-variable">$BRANCH_NAME</span>
+</div></code></pre>
+<ol start="2">
+<li>Upgrade all of the dependencies in <code>yarn.lock</code> according to <code>package.json</code> - this mimics what happens for users upon a fresh install</li>
+</ol>
+<pre><code class="language-bash"><div> $ yarn upgrade
+</div></code></pre>
+<ol start="3">
+<li>Push changes to remote</li>
+</ol>
+<pre><code class="language-bash"><div> $ git add yarn.lock
+ $ git commit -m <span class="hljs-string">&quot;chore: weekly lockfile maintenance&quot;</span>
+ $ git push --set-upstream origin <span class="hljs-variable">$BRANCH_NAME</span>
+</div></code></pre>
+<ol start="4">
+<li>Create a PR using GitHub API (more details in <a href="https://docs.github.com/en/rest/reference/pulls">GitHub API Documentation</a>)</li>
+</ol>
+<pre><code class="language-bash"><div> $ BODY=<span class="hljs-string">&#x27;{&quot;head&quot;:&#x27;</span><span class="hljs-string">&#x27;&quot;&#x27;</span><span class="hljs-variable">${BRANCH_NAME}</span><span class="hljs-string">&#x27;&quot;&#x27;</span><span class="hljs-string">&#x27;,&quot;base&quot;:&quot;main&quot;,&quot;title&quot;:&quot;Weekly lockfile maintenance&quot;}&#x27;</span>
+     &amp;&amp; curl -X POST
+       -H <span class="hljs-string">&quot;Accept:application/vnd.github.v3+json&quot;</span>
+       -u <span class="hljs-variable">$GIT_AUTHOR_NAME</span>:<span class="hljs-variable">$GH_TOKEN</span> https://api.github.com/repos/stoplightio/elements/pulls
+       -d <span class="hljs-string">&quot;<span class="hljs-variable">$BODY</span>&quot;</span>
+</div></code></pre>
+<p>Both <code>$GIT_AUTHOR_NAME</code> and <code>$GH_TOKEN</code> are secrets from <code>CircleCI</code> - make sure you don't hard code your credentials in the CI config file and/or the command itself.</p>
+<h4 id="ci-configuration"><strong>CI configuration</strong></h4>
+<pre><code class="language-yml"><div><span class="hljs-attr">workflows:</span>
+ <span class="hljs-attr">version:</span> <span class="hljs-number">2</span>
+ <span class="hljs-attr">test-and-release:</span>
+   <span class="hljs-string">...</span>
+ <span class="hljs-attr">perform-lockfile-maintenance:</span>
+   <span class="hljs-attr">triggers:</span>
+       <span class="hljs-bullet">-</span> <span class="hljs-attr">schedule:</span>
+           <span class="hljs-attr">cron:</span> <span class="hljs-string">&quot;0 3 * * 1&quot;</span>
+           <span class="hljs-attr">filters:</span>
+             <span class="hljs-attr">branches:</span>
+               <span class="hljs-attr">only:</span>
+                 <span class="hljs-bullet">-</span> <span class="hljs-string">main</span>
+   <span class="hljs-attr">jobs:</span>
+     <span class="hljs-bullet">-</span> <span class="hljs-string">lockfile-maintenance</span>
+</div></code></pre>
+<p>Make sure you define the job as well:</p>
+<pre><code class="language-yml"><div><span class="hljs-attr">jobs:</span>
+<span class="hljs-attr">lockfile-maintenance:</span>
+   <span class="hljs-attr">docker:</span>
+     <span class="hljs-bullet">-</span> <span class="hljs-attr">image:</span> <span class="hljs-string">circleci/node:12</span>
+   <span class="hljs-attr">steps:</span>
+     <span class="hljs-bullet">-</span> <span class="hljs-string">checkout</span>
+     <span class="hljs-bullet">-</span> <span class="hljs-attr">run:</span>
+         <span class="hljs-attr">command:</span> <span class="hljs-string">|
+           ### THIS IS A PLACE FOR THE COMMAND FROM PREVIOUS PARAGRAPH
+</span></div></code></pre>
+<p>By default, CircleCI runs workflows against all commits from all branches. This is definitely not the behavior we want to have for lockfile maintenance. The desired outcome is that it will run once a week against the <code>main</code> branch. We also don't run any tests at this stage, as the PR created against the <code>main</code> branch will trigger the <code>test-and-release</code> workflow that is being run for each branch and contains a test suite, checks linting, and builds a project to see if there are no crashes.</p>
+<p>That's where <code>cron</code> jobs come in handy. We first define that our <code>perform-lockfile-maintenance</code> workflow will be triggered by one (test yours using <a href="https://crontab.guru">this online tool</a>) by putting cron job description in the <code>triggers/schedule</code> section. Then we apply an additional filter to it, so it only targets <code>main</code> at any given moment.</p>
+<p>As for scheduling, we decided to go with Monday before work (Central European Time), so it is the first thing we look into at the beginning of the week. A contributor opens a PR containing changes made to <code>yarn.lock</code>, approves if it looks right, and merges the change to <code>main</code>.</p>
+<p>And that's it! You've just set up your first lockfile maintenance flow!</p>
+<h2 id="possible-improvements--aftermath">Possible improvements / aftermath</h2>
+<p>There are few more things you can do to improve your confidence even more:</p>
+<ul>
+<li>If you include examples of usage for your library like us (an integration for GatsbyJS, Angular, CRA) you can bump their dependencies as well. This will assure that your library not only is properly tested internally but doesn't crash when applied to a real-life scenario</li>
+<li>Serve an environment containing these integrations for each PR e.g. using Netlify. That will make the whole testing process much quicker as you won't need to check out the changes and run them locally on your own</li>
+<li>Strengthen your CI pipeline in general: the more that is covered by your testing suite, the less you will have to check</li>
+</ul>
+<h2 id="summary">Summary</h2>
+<p>So there you go, we have just gone to a dependency hell and came back alive!</p>
+<p>I believe that what I have described above will help you encounter fewer issues when developing your library, especially if you don't have a full team dedicated to testing bugs.</p>
+<p>But even if I didn't convince you to do a weekly/monthly/whatever dependency bump I hope that this article gave you a strong understanding of the lockfile itself, why it is important when talking about compatibility across different machines, and seeing that lockfile maintenance does not have to be a terrible chore that takes an unreasonable amount of time.</p>
+<p>If you feel like this article added some value to your current skill set though, please consider resharing it on your social media.</p>
+<p>If you’d like to learn more about our open-source tool, Elements, which was a basis for this article, visit our website.</p>
+
+    </body>
+    </html>
