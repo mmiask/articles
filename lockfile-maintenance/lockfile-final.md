@@ -1,7 +1,4 @@
-Author: Mike
-Reviewer: Chris M
- 
-# Dependency bump a day keeps the code crashes away: the importance of updating a lockfile
+# Yarn.lock: how it works and what you risk without maintaining yarn dependencies — deep dive
  
 Coding is fun, there's no doubt about it.
  
@@ -328,6 +325,3 @@ I believe that what I have described above will help you encounter fewer issues 
 But even if I didn't convince you to do a weekly/monthly/whatever dependency bump I hope that this article gave you a strong understanding of the lockfile itself, why it is important when talking about compatibility across different machines, and seeing that lockfile maintenance does not have to be a terrible chore that takes an unreasonable amount of time.
  
 If you feel like this article added some value to your current skill set though, please consider resharing it on your social media.
- 
-If you’d like to learn more about our open-source tool, Elements, which was a basis for this article, visit our website.
-
